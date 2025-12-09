@@ -23,6 +23,14 @@ export class ValidateUserUseCase {
         subject: 'Verifique seu acesso à Bukiz',
         content: getLoginOtpTemplate(generatedOtp),
       });
+
+      console.log({
+        service: 'Mail',
+        payload: {
+          recipient: to,
+          timestamp: new Date().toISOString(),
+        },
+      });
     } catch {
       throw new ServiceUnavailableException('MAIL SERVICE UNAVAILABLE!');
     }
@@ -30,7 +38,6 @@ export class ValidateUserUseCase {
 
   async execute({ email }: ValidateUserDto): Promise<User> {
     const existingUser = await this.userRepository.findByEmail(email);
-
     if (existingUser) {
       await this.sendOtpMail({
         to: existingUser.email,
