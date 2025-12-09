@@ -1,0 +1,1 @@
+{ 'pnpm': { 'overrides': { '@prisma/client-runtime-utils': '7.0.0' } } }
