@@ -1,21 +1,20 @@
 import { ulid } from 'ulidx';
 
 export interface UserProps {
+  id?: string;
   email: string;
   name?: string;
   avatar?: string;
   updatedAt?: Date | string;
+  createdAt?: Date | string;
 }
 
 export class User {
-  readonly id: string;
-  readonly createdAt: Date;
-
   private props: UserProps;
 
-  constructor(props: UserProps, id?: string) {
-    this.id = id ?? ulid();
-    this.createdAt = new Date();
+  constructor(props: UserProps, id?: string, createdAt?: string) {
+    this.props.id = id ?? ulid();
+    this.props.createdAt = createdAt ?? new Date();
 
     this.props = {
       ...props,
@@ -23,6 +22,14 @@ export class User {
     };
 
     this.validateEmail(this.props.email);
+  }
+
+  get id(): string | null {
+    return this.props.id ?? null;
+  }
+
+  get createdAt(): Date | string | null {
+    return this.props.createdAt ?? null;
   }
 
   get email(): string {

@@ -1,5 +1,6 @@
 services:
   api:
+    container_name: api.bukiz.com
     build: .
     ports:
       - "3000:3000"
@@ -9,9 +10,9 @@ services:
       - postgres
     environment:
       DATABASE_URL: "postgresql://bukiz:bukiz@postgres:5432/bukiz?schema=public"
-    container_name: api.bukiz.com
 
   postgres: 
+    container_name: bukiz.db
     image: postgres:15-alpine
     environment:
       POSTGRES_USER: bukiz
@@ -19,4 +20,3 @@ services:
       POSTGRES_DB: bukiz
     ports:
       - "5432:5432"
-    container_name: bukiz.db
