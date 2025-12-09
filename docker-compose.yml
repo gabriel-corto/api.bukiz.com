@@ -1,0 +1,22 @@
+services:
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: "postgresql://bukiz:bukiz@postgres:5432/bukiz?schema=public"
+    container_name: api.bukiz.com
+
+  postgres: 
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: bukiz
+      POSTGRES_PASSWORD: bukiz
+      POSTGRES_DB: bukiz
+    ports:
+      - "5432:5432"
+    container_name: bukiz.db

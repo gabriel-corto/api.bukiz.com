@@ -20,7 +20,7 @@ eslint.config.js
 test/
 **/*.spec.ts
 
-Dockerfile
+dockerfile
 .dockerignore
 docker-compose.yml
 
