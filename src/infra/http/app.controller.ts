@@ -5,8 +5,9 @@ export class AppController {
   @Get()
   getHello() {
     return {
-      message: '🚀 Welcome to Bukiz API Service!',
+      statusCode: 200,
       version: '1.0.0',
+      message: '🚀 Welcome to Bukiz API Service!',
     };
   }
 }
