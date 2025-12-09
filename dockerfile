@@ -1,4 +1,4 @@
-FROM node:20-alpine3.23 AS build
+FROM node:20-alpine3.23 AS builder
 
 RUN npm install --g corepack@latest && corepack enable && corepack use pnpm@latest-10  
 

@@ -17,13 +17,3 @@ model User {
 
   @@map("users")
 }
-
-model Profile {
-  id        String   @id
-  name      String?
-  avatar    String?
-  createdAt DateTime
-  updatedAt DateTime
-
-  @@map("profile")
-}
