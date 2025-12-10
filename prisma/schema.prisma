@@ -9,21 +9,9 @@ datasource db {
 
 model User {
   id        String   @id
-  avatar    String?
-  name      String?
   email     String   @unique
   createdAt DateTime
   updatedAt DateTime
 
   @@map("users")
-}
-
-model Profile {
-  id        String   @id
-  name      String?
-  avatar    String?
-  createdAt DateTime
-  updatedAt DateTime
-
-  @@map("profile")
 }

@@ -5,18 +5,18 @@ services:
     ports:
       - "3000:3000"
     env_file:
-      - .env
+      - .env  
     depends_on:
       - postgres
     environment:
-      DATABASE_URL: "postgresql://bukiz:bukiz@postgres:5432/bukiz?schema=public"
+      DATABASE_URL: "postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@postgres:5432/${DATABASE_NAME}?schema=public"
 
   postgres: 
     container_name: bukiz.db
     image: postgres:15-alpine
     environment:
-      POSTGRES_USER: bukiz
-      POSTGRES_PASSWORD: bukiz
-      POSTGRES_DB: bukiz
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_USER}
     ports:
       - "5432:5432"

@@ -4,7 +4,7 @@ import { User } from '@/domain/entities/user.entity';
 import { MailGateway, SendMailDto } from '@/domain/gateways/mail.gateway';
 import { UsersRepository } from '@/domain/repositories/users.repository';
 
-import { ValidateUserDto } from '../dto/validate-user.dto';
+import { ValidateUserDto } from '../../infra/http/dto/validate-user.dto';
 
 import { getLoginOtpTemplate } from '@/infra/mail/templates/login-otp.template';
 import { generatedOtp } from '@/helpers/otp-generator';
@@ -30,18 +30,19 @@ export class ValidateUserUseCase {
 
   async execute({ email }: ValidateUserDto): Promise<User> {
     const existingUser = await this.userRepository.findByEmail(email);
-
     if (existingUser) {
       await this.sendOtpMail({
         to: existingUser.email,
       });
 
+      console.log(existingUser);
       return existingUser;
     }
 
     const user = new User({
       email,
     });
+
     const newUser = await this.userRepository.create(user);
 
     await this.sendOtpMail({
