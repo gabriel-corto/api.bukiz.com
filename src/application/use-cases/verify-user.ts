@@ -4,13 +4,13 @@ import { User } from '@/domain/entities/user.entity';
 import { MailGateway, SendMailDto } from '@/domain/gateways/mail.gateway';
 import { UsersRepository } from '@/domain/repositories/users.repository';
 
-import { ValidateUserDto } from '../../infra/http/dto/validate-user.dto';
+import { VerifyUserDto } from '../../infra/http/dto/verify-user.dto';
 
 import { getLoginOtpTemplate } from '@/infra/mail/templates/login-otp.template';
 import { generatedOtp } from '@/helpers/otp-generator';
 
 @Injectable()
-export class ValidateUserUseCase {
+export class VerifyUserUseCase {
   constructor(
     private mail: MailGateway,
     private userRepository: UsersRepository,
@@ -28,7 +28,7 @@ export class ValidateUserUseCase {
     }
   }
 
-  async execute({ email }: ValidateUserDto): Promise<User> {
+  async execute({ email }: VerifyUserDto): Promise<User> {
     const existingUser = await this.userRepository.findByEmail(email);
     if (existingUser) {
       await this.sendOtpMail({
