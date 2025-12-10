@@ -4,7 +4,7 @@ import { User } from '@/domain/entities/user.entity';
 import { MailGateway, SendMailDto } from '@/domain/gateways/mail.gateway';
 import { UsersRepository } from '@/domain/repositories/users.repository';
 
-import { ValidateUserDto } from '../dto/validate-user.dto';
+import { ValidateUserDto } from '../../infra/http/dto/validate-user.dto';
 
 import { getLoginOtpTemplate } from '@/infra/mail/templates/login-otp.template';
 import { generatedOtp } from '@/helpers/otp-generator';
@@ -23,14 +23,6 @@ export class ValidateUserUseCase {
         subject: 'Verifique seu acesso à Bukiz',
         content: getLoginOtpTemplate(generatedOtp),
       });
-
-      console.log({
-        service: 'Mail',
-        payload: {
-          recipient: to,
-          timestamp: new Date().toISOString(),
-        },
-      });
     } catch {
       throw new ServiceUnavailableException('MAIL SERVICE UNAVAILABLE!');
     }
@@ -43,12 +35,14 @@ export class ValidateUserUseCase {
         to: existingUser.email,
       });
 
+      console.log(existingUser);
       return existingUser;
     }
 
     const user = new User({
       email,
     });
+
     const newUser = await this.userRepository.create(user);
 
     await this.sendOtpMail({

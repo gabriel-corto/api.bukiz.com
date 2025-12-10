@@ -1,7 +1,7 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 
-import { ValidateUserDto } from '@/application/auth/dto/validate-user.dto';
-import { ValidateUserUseCase } from '@/application/auth/use-cases/validate-user.use-case';
+import { ValidateUserDto } from '@/infra/http/dto/validate-user.dto';
+import { ValidateUserUseCase } from '@/application/use-cases/validate-user';
 import { UserPresenter } from '@/domain/entities/user.entity';
 
 @Controller('auth')

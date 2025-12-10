@@ -1,69 +1,61 @@
+import { Replace } from '@/helpers/replace';
 import { ulid } from 'ulidx';
 
 export interface UserProps {
+  id: string;
   email: string;
-  name?: string;
-  avatar?: string;
-  updatedAt?: Date | string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export class User {
-  readonly id: string;
-  readonly createdAt: Date;
   private props: UserProps;
 
-  constructor(props: UserProps, id?: string) {
-    this.id = id ?? ulid();
-    this.createdAt = new Date();
-
+  constructor(
+    props: Replace<
+      UserProps,
+      { createdAt?: Date; id?: string; updatedAt?: Date }
+    >,
+  ) {
     this.props = {
       ...props,
+      id: props.id ?? ulid(),
+      createdAt: props.createdAt ?? new Date(),
       updatedAt: props.updatedAt ?? new Date(),
     };
 
     this.validateEmail(this.props.email);
   }
 
-  get email(): string {
+  public get id(): string {
+    return this.props.id;
+  }
+
+  public get createdAt(): Date {
+    return this.props.createdAt;
+  }
+
+  public get updatedAt(): Date | string | undefined {
+    return this.props.updatedAt;
+  }
+
+  public get email(): string {
     return this.props.email;
   }
 
-  get name(): string | null {
-    return this.props.name ?? null;
-  }
-
-  get avatar(): string | null {
-    return this.props.avatar ?? null;
-  }
-
-  get updatedAt(): Date | null | string {
-    return this.props.updatedAt ?? null;
-  }
-
-  public updateEmail(newEmail: string) {
-    this.validateEmail(newEmail);
-    this.props.email = newEmail;
-    this.touch();
-  }
-
-  public updateName(newName: string) {
-    this.props.name = newName;
-    this.touch();
-  }
-
-  public updateAvatar(newAvatar: string) {
-    this.props.avatar = newAvatar;
-    this.touch();
+  public set email(email: string) {
+    this.validateEmail(email);
+    this.props.email = email;
+    this.props.updatedAt = new Date();
   }
 
   private validateEmail(email: string) {
-    if (!email.includes('@')) {
-      throw new Error('Email inválido');
-    }
-  }
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const isValidEmail = emailRegex.test(email);
 
-  private touch() {
-    this.props.updatedAt = new Date();
+    if (!isValidEmail) {
+      throw new Error('Email Inválido');
+    }
   }
 }
 
@@ -72,8 +64,6 @@ export class UserPresenter {
     return {
       id: user.id,
       email: user.email,
-      name: user.name,
-      avatar: user.avatar,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };
