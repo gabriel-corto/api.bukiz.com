@@ -1,10 +1,10 @@
 import { Injectable, ServiceUnavailableException } from '@nestjs/common';
 
-import { User } from '@/domain/entities/user.entity';
+import { User } from '@/domain/entities/user/user.entity';
 import { MailGateway, SendMailDto } from '@/domain/gateways/mail.gateway';
 import { UsersRepository } from '@/domain/repositories/users.repository';
 
-import { VerifyUserDto } from '../../infra/http/dto/verify-user.dto';
+import { VerifyUserDto } from '@/infra/http/dto/verify-user.dto';
 
 import { getLoginOtpTemplate } from '@/infra/mail/templates/login-otp.template';
 import { generatedOtp } from '@/helpers/otp-generator';
@@ -35,7 +35,6 @@ export class VerifyUserUseCase {
         to: existingUser.email,
       });
 
-      console.log(existingUser);
       return existingUser;
     }
 

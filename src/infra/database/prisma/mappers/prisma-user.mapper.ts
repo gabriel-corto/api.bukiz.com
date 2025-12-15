@@ -1,4 +1,4 @@
-import { User } from 'src/domain/entities/user.entity';
+import { User } from '@/domain/entities/user/user.entity';
 import { Prisma } from '@prisma/client';
 import { User as PrismaUser } from '@prisma/client';
 

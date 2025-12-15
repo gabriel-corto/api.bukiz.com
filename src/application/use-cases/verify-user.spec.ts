@@ -1,5 +1,5 @@
 import { VerifyUserUseCase } from './verify-user';
-import { User } from '@/domain/entities/user.entity';
+import { User } from '@/domain/entities/user/user.entity';
 
 import { InMemoryUsersRepository } from '@test/repositories/in-memory-users.repository';
 import { FakeMailService } from '@test/gateways/fake-mail.gateway';
