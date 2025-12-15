@@ -9,7 +9,7 @@ services:
     depends_on:
       - postgres
     environment:
-      DATABASE_URL: "postgresql://${PROD_DATABASE_USER}:${PROD_DATABASE_PASSWORD}@postgres:5432/${PROD_DATABASE_NAME}?schema=public"
+      DATABASE_URL: "postgresql://${PROD_DATABASE_USER}:${PROD_DATABASE_PASSWORD}@dpg-d5048o8gjchc73d865b0-a/${PROD_DATABASE_NAME}"
 
   postgres: 
     container_name: bukiz.db
