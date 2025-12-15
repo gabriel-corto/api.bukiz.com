@@ -16,4 +16,4 @@ RUN pnpm build
 
 EXPOSE 3000
 
-CMD [ "pnpm", "start:prod" ]
+CMD [ "/bin/sh", "-c", "npx prisma migrate deploy && pnpm start:prod" ]
