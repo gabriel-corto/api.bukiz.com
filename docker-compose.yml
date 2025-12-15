@@ -9,14 +9,14 @@ services:
     depends_on:
       - postgres
     environment:
-      DATABASE_URL: "postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@postgres:5432/${DATABASE_NAME}?schema=public"
+      DATABASE_URL: "postgresql://${PROD_DATABASE_USER}:${PROD_DATABASE_PASSWORD}@postgres:5432/${PROD_DATABASE_NAME}?schema=public"
 
   postgres: 
     container_name: bukiz.db
     image: postgres:15-alpine
     environment:
-      POSTGRES_USER: ${DATABASE_USER}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${PROD_DATABASE_USER}
+      POSTGRES_PASSWORD: ${PROD_DATABASE_PASSWORD}
+      POSTGRES_DB: ${PROD_DATABASE_NAME}
     ports:
       - "5432:5432"
