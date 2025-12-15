@@ -1,17 +1,16 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
-
-import { ValidateUserDto } from '@/infra/http/dto/validate-user.dto';
-import { ValidateUserUseCase } from '@/application/use-cases/validate-user';
-import { UserPresenter } from '@/domain/entities/user.entity';
+import { VerifyUserDto } from '@/infra/http/dto/verify-user.dto';
+import { VerifyUserUseCase } from '@/application/use-cases/verify-user';
+import { UserPresenter } from '@/domain/entities/user/user.entity';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private validateUser: ValidateUserUseCase) {}
+  constructor(private verifyUser: VerifyUserUseCase) {}
 
-  @Post('')
+  @Post('/verify')
   @HttpCode(200)
-  async validate(@Body() body: ValidateUserDto) {
-    const user = await this.validateUser.execute(body);
+  async verify(@Body() body: VerifyUserDto) {
+    const user = await this.verifyUser.execute(body);
 
     return {
       statusCode: 200,
