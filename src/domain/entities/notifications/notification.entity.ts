@@ -20,7 +20,8 @@ export class Notification {
     this.props = {
       ...props,
       id: props.id ?? ulid(),
-      hasRead: false,
+      hasRead: props.hasRead ?? false,
+      readAt: props.readAt ?? null,
       createdAt: props.createdAt ?? new Date(),
     };
   }
@@ -46,8 +47,22 @@ export class Notification {
   get readAt(): Date | null | undefined {
     return this.props.readAt;
   }
-  read() {
+
+  public read() {
     this.props.readAt = new Date();
     this.props.hasRead = true;
+  }
+}
+
+export class NotificationPresent {
+  static toHtpp(notification: Notification) {
+    return {
+      id: notification.id,
+      content: notification.content,
+      createdAt: notification.createdAt,
+      recipientId: notification.recipientId,
+      readAt: notification.readAt,
+      hasRead: notification.hasRead,
+    };
   }
 }

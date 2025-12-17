@@ -3,7 +3,7 @@ import { PrismaService } from './prisma/prisma.service';
 import { PrismaUsersRepository } from './prisma/repositories/prisma-user.repository';
 import { UsersRepository } from '@/domain/repositories/users.repository';
 import { NotificationRepository } from '@/domain/repositories/notifications.repository';
-import { InMemoryNotificationRepository } from '@/infra/database/in-memory/in-memory-notification.repository';
+import { PrismaNotificationsRepository } from './prisma/repositories/prisma-notifications.repository';
 
 @Module({
   providers: [
@@ -14,7 +14,7 @@ import { InMemoryNotificationRepository } from '@/infra/database/in-memory/in-me
     },
     {
       provide: NotificationRepository,
-      useClass: InMemoryNotificationRepository,
+      useClass: PrismaNotificationsRepository,
     },
   ],
   exports: [UsersRepository, NotificationRepository],

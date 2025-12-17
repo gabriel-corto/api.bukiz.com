@@ -15,6 +15,9 @@ export class PrismaUserMapper {
   static toDomain(raw: PrismaUser): User {
     const user = new User({
       email: raw.email,
+      createdAt: raw.createdAt,
+      id: raw.id,
+      updatedAt: raw.updatedAt,
     });
 
     return user;

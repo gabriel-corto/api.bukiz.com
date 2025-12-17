@@ -5,6 +5,11 @@ import { NotificationRepository } from '@/domain/repositories/notifications.repo
 export class InMemoryNotificationRepository implements NotificationRepository {
   public notifications: Notification[] = [];
 
+  async findAll(): Promise<Notification[]> {
+    await Promise.resolve();
+    return this.notifications;
+  }
+
   async save(notification: Notification): Promise<Notification> {
     await Promise.resolve();
 

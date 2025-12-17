@@ -13,6 +13,7 @@ export class PrismaUsersRepository implements UsersRepository {
     const createdUser = await this.prisma.user.create({
       data,
     });
+
     return PrismaUserMapper.toDomain(createdUser);
   }
 

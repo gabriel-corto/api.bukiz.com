@@ -18,8 +18,9 @@ export class ReadNotificationUseCase {
     }
 
     notification.read();
-    await this.notificationRepository.save(notification);
+    const updatedNotification =
+      await this.notificationRepository.save(notification);
 
-    return notification;
+    return updatedNotification;
   }
 }
