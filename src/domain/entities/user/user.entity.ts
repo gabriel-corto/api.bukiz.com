@@ -1,4 +1,4 @@
-import { Replace } from '@/helpers/replace';
+import { MakeOptional } from '@/helpers/make-optional';
 import { ulid } from 'ulidx';
 
 export interface UserProps {
@@ -12,10 +12,7 @@ export class User {
   private props: UserProps;
 
   constructor(
-    props: Replace<
-      UserProps,
-      { createdAt?: Date; id?: string; updatedAt?: Date }
-    >,
+    props: MakeOptional<UserProps, 'id' | 'createdAt' | 'updatedAt'>,
   ) {
     this.props = {
       ...props,

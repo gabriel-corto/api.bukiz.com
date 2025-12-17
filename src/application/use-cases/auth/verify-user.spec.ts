@@ -1,8 +1,6 @@
-import { VerifyUserUseCase } from './verify-user';
-import { User } from '@/domain/entities/user/user.entity';
-
 import { InMemoryUsersRepository } from '@test/repositories/in-memory-users.repository';
 import { FakeMailService } from '@test/gateways/fake-mail.gateway';
+import { VerifyUserUseCase } from './verify-user';
 
 describe('Verify User', () => {
   it('Should be able to verify an user', async () => {
@@ -10,12 +8,8 @@ describe('Verify User', () => {
     const usersRepository = new InMemoryUsersRepository();
     const validateUser = new VerifyUserUseCase(mailGateway, usersRepository);
 
-    const user = new User({
+    const user = await validateUser.execute({
       email: 'gabrielcorto272@gmail.com',
-    });
-
-    await validateUser.execute({
-      email: user.email,
     });
 
     expect(user).toBeTruthy();

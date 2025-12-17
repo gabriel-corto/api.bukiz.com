@@ -4,7 +4,7 @@ import { User } from '@/domain/entities/user/user.entity';
 import { MailGateway, SendMailDto } from '@/domain/gateways/mail.gateway';
 import { UsersRepository } from '@/domain/repositories/users.repository';
 
-import { VerifyUserDto } from '@/infra/http/dto/verify-user.dto';
+import { VerifyUserDto } from '@/application/dto/verify-user.dto';
 
 import { getLoginOtpTemplate } from '@/infra/mail/templates/login-otp.template';
 import { generatedOtp } from '@/helpers/otp-generator';
