@@ -1,5 +1,5 @@
 import { SendNotificationUseCase } from './send-notification';
-import { InMemoryNotificationRepository } from '@test/repositories/in-memory-notification.repository';
+import { InMemoryNotificationRepository } from '@/infra/database/in-memory/in-memory-notification.repository';
 
 describe('Send Notification', () => {
   const notificationRepository = new InMemoryNotificationRepository();
