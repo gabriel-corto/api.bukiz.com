@@ -53,16 +53,3 @@ export class Notification {
     this.props.hasRead = true;
   }
 }
-
-export class NotificationPresent {
-  static toHtpp(notification: Notification) {
-    return {
-      id: notification.id,
-      content: notification.content,
-      createdAt: notification.createdAt,
-      recipientId: notification.recipientId,
-      readAt: notification.readAt,
-      hasRead: notification.hasRead,
-    };
-  }
-}

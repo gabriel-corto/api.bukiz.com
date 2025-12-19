@@ -14,7 +14,7 @@ export class ReadNotificationUseCase {
     });
 
     if (!notification) {
-      throw new BadRequestException();
+      throw new BadRequestException('Notificação não encontrada!');
     }
 
     notification.read();

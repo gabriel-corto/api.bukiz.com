@@ -12,7 +12,7 @@ export function getLoginOtpTemplate(otpCode: string) {
 
     <table width="100%" cellpadding="0" cellspacing="0">
       <tr>
-        <td align="center">
+        <td align="left">
 
           <table width="100%" cellpadding="0" cellspacing="0" style="max-width:520px; padding:0 22px; border-radius:8px;">
             

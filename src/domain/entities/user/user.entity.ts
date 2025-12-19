@@ -55,14 +55,3 @@ export class User {
     }
   }
 }
-
-export class UserPresenter {
-  static toHttp(user: User) {
-    return {
-      id: user.id,
-      email: user.email,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-    };
-  }
-}

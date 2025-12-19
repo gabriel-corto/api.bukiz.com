@@ -1,10 +1,13 @@
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+
 import { ReadNotificationUseCase } from '@/application/use-cases/notifications/read-notification';
 import { SendNotificationUseCase } from '@/application/use-cases/notifications/send-notification';
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+
 import { SendNotificationBody } from '../dto/send-notification-body';
 import { ReadNotificationQuery } from '../dto/read-notification-query';
-import { NotificationPresent } from '@/domain/entities/notifications/notification.entity';
+
 import { NotificationRepository } from '@/domain/repositories/notifications.repository';
+import { NotificationViewModel } from '../view-model/notification-view-model';
 
 @Controller('notifications')
 export class NotificationsController {
@@ -19,7 +22,7 @@ export class NotificationsController {
     const notifications = await this.notificationRepository.findAll();
     return {
       data: notifications.map((notification) =>
-        NotificationPresent.toHtpp(notification),
+        NotificationViewModel.toHtpp(notification),
       ),
     };
   }
@@ -33,7 +36,9 @@ export class NotificationsController {
       recipientId,
     });
 
-    return NotificationPresent.toHtpp(notification);
+    return {
+      notification: NotificationViewModel.toHtpp(notification),
+    };
   }
 
   @Patch(':notificationId')
@@ -44,6 +49,8 @@ export class NotificationsController {
       notificationId,
     });
 
-    return NotificationPresent.toHtpp(notification);
+    return {
+      notification: NotificationViewModel.toHtpp(notification),
+    };
   }
 }

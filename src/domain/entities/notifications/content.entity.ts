@@ -1,25 +1,19 @@
-export interface ContentProps {
-  value: string;
-}
-
 export class Content {
-  private readonly content: ContentProps;
+  private readonly content: string;
 
-  constructor(newValue: string) {
-    const isLengthValid = this.validateContentLength(newValue);
+  constructor(content: string) {
+    const isLengthValid = this.validateContentLength(content);
     if (!isLengthValid) {
       throw new Error(
         'Conteúdo deve ter no mínimo 5 caracteres e no máximo 240!',
       );
     }
 
-    this.content = {
-      value: newValue,
-    };
+    this.content = content;
   }
 
   get value(): string {
-    return this.content.value;
+    return this.content;
   }
 
   private validateContentLength(content: string): boolean {
