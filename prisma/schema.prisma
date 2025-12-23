@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Costumer {
   id             String    @id
   email          String    @unique
   createdAt      DateTime
@@ -15,7 +15,7 @@ model User {
   otp_code       String?
   otp_expires_in DateTime?
 
-  @@map("users")
+  @@map("costumers")
 }
 
 model Notification {

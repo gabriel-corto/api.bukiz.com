@@ -1,40 +1,40 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 
-import { VerifyUserUseCase } from '@/application/use-cases/auth/verify-user';
-import { VerifyOtpUseCase } from '@/application/use-cases/auth/verify-otp';
+import { VerifyCostumerEmailUseCase } from '@/application/use-cases/auth/verify-costumer-email';
+import { VerifyCostumerAuthCodeUseCase } from '@/application/use-cases/auth/verify-costumer-otp';
 
-import { UserViewModel } from '../view-model/user-view-model';
+import { CostumerViewModel } from '../view-model/costumer-view-model';
 
-import { VerifyUserBody } from '../dto/verify-user-body';
-import { VerifyOtpBody } from '../dto/verify-otp-body';
+import { VerifyCostumerEmailBody } from '../dto/verify-costumer-email-body';
+import { VerifyOtpBody } from '../dto/verify-costumer-otp-body';
 
 @Controller('auth')
 export class AuthController {
   constructor(
-    private verifyUser: VerifyUserUseCase,
-    private verifyOtp: VerifyOtpUseCase,
+    private verifyUser: VerifyCostumerEmailUseCase,
+    private verifyOtp: VerifyCostumerAuthCodeUseCase,
   ) {}
 
   @Post('/verify-email')
   @HttpCode(200)
-  async verifyEmail(@Body() body: VerifyUserBody) {
-    const user = await this.verifyUser.execute(body);
+  async verifyEmail(@Body() body: VerifyCostumerEmailBody) {
+    const costumer = await this.verifyUser.execute(body);
 
     return {
       statusCode: 200,
-      data: UserViewModel.toHttp(user),
+      data: CostumerViewModel.toHttp(costumer),
     };
   }
 
   @Post('/verify-otp')
   async verifyUserOtp(@Body() body: VerifyOtpBody) {
     const { code, email } = body;
-    const user = await this.verifyOtp.execute({ code, email });
+    const costumer = await this.verifyOtp.execute({ code, email });
 
     return {
       statusCode: 200,
       message: 'AUTHORIZED',
-      data: UserViewModel.toHttp(user),
+      data: CostumerViewModel.toHttp(costumer),
     };
   }
 }

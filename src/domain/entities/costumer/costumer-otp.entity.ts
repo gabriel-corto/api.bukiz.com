@@ -4,20 +4,18 @@ import { add } from 'date-fns';
 export interface OtpProps {
   code: string;
   expiresIn: Date;
-  hasExpires: boolean;
 }
 
 export class Otp {
   public readonly props: OtpProps;
 
-  constructor(props: MakeOptional<OtpProps, 'expiresIn' | 'hasExpires'>) {
+  constructor(props: MakeOptional<OtpProps, 'expiresIn'>) {
     if (!this.validateOtpCodeLenght(props.code)) {
       throw new Error('O OTP deve ter exatamente 5 caracteres.');
     }
 
     this.props = {
       code: props.code,
-      hasExpires: props.hasExpires ?? false,
       expiresIn: props.expiresIn ?? this.addOtpExpirationTime(new Date()),
     };
   }

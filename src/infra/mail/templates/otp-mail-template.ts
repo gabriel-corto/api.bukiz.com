@@ -1,4 +1,4 @@
-export function getLoginOtpTemplate(otpCode: string) {
+export function renderOtpMailTemplate(otpCode: string) {
   return `
   <!DOCTYPE html>
   <html lang="pt-BR">

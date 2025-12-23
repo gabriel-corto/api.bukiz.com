@@ -5,10 +5,10 @@ import { MakeOptional } from '@/helpers/make-optional';
 interface NotificationProps {
   id: string;
   content: Content;
-  createdAt: Date;
-  recipientId: string;
-  readAt?: Date | null;
   hasRead: boolean;
+  createdAt: Date;
+  readAt?: Date | null;
+  recipientId: string;
 }
 
 export class Notification {

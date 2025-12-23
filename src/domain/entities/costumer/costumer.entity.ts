@@ -1,8 +1,9 @@
-import { MakeOptional } from '@/helpers/make-optional';
 import { ulid } from 'ulidx';
-import { Otp } from './user-otp.entity';
 
-export interface UserProps {
+import { MakeOptional } from '@/helpers/make-optional';
+import { Otp } from './costumer-otp.entity';
+
+export interface CostumerProps {
   id: string;
   email: string;
   otp?: Otp | null;
@@ -10,11 +11,14 @@ export interface UserProps {
   updatedAt: Date;
 }
 
-export class User {
-  private props: UserProps;
+export class Costumer {
+  private props: CostumerProps;
 
   constructor(
-    props: MakeOptional<UserProps, 'id' | 'createdAt' | 'updatedAt' | 'otp'>,
+    props: MakeOptional<
+      CostumerProps,
+      'id' | 'createdAt' | 'updatedAt' | 'otp'
+    >,
   ) {
     this.props = {
       ...props,

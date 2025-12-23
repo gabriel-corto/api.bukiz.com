@@ -1,22 +1,23 @@
 import { Module } from '@nestjs/common';
-import { PrismaService } from './prisma/prisma.service';
-import { PrismaUsersRepository } from './prisma/repositories/prisma-user.repository';
-import { UsersRepository } from '@/domain/repositories/users.repository';
 import { NotificationRepository } from '@/domain/repositories/notifications.repository';
+import { CostumersRepository } from '@/domain/repositories/costumers.repository';
+
+import { PrismaService } from './prisma/prisma.service';
+import { PrismaCostumersRepository } from './prisma/repositories/prisma-costumers.repository';
 import { PrismaNotificationsRepository } from './prisma/repositories/prisma-notifications.repository';
 
 @Module({
   providers: [
     PrismaService,
     {
-      provide: UsersRepository,
-      useClass: PrismaUsersRepository,
+      provide: CostumersRepository,
+      useClass: PrismaCostumersRepository,
     },
     {
       provide: NotificationRepository,
       useClass: PrismaNotificationsRepository,
     },
   ],
-  exports: [UsersRepository, NotificationRepository],
+  exports: [CostumersRepository, NotificationRepository],
 })
 export class DatabaseModule {}
