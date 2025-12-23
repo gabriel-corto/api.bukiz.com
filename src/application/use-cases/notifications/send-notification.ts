@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { ulid } from 'ulidx';
 
-import { Notification } from '@/domain/entities/notifications/notification.entity';
+import { Notification } from '@/domain/entities/notification/notification.entity';
 import { NotificationRepository } from '@/domain/repositories/notifications.repository';
-import { Content } from '@/domain/entities/notifications/content.entity';
+import { Content } from '@/domain/entities/notification/content.entity';
 
 import { SendNotificationDto } from '@/application/dto/send-notification.dto';
 

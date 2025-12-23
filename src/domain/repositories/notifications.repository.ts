@@ -1,5 +1,5 @@
 import { ReadNotificationDto } from '@/application/dto/read-notification.dto';
-import { Notification } from '../entities/notifications/notification.entity';
+import { Notification } from '../entities/notification/notification.entity';
 
 export abstract class NotificationRepository {
   abstract save(data: Notification): Promise<Notification>;

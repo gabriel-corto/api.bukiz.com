@@ -8,10 +8,12 @@ datasource db {
 }
 
 model User {
-  id        String   @id
-  email     String   @unique
-  createdAt DateTime
-  updatedAt DateTime
+  id             String    @id
+  email          String    @unique
+  createdAt      DateTime
+  updatedAt      DateTime
+  otp_code       String?
+  otp_expires_in DateTime?
 
   @@map("users")
 }

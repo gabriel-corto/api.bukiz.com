@@ -2,15 +2,15 @@ import { Module } from '@nestjs/common';
 
 import { AppController } from './controllers/app.controller';
 import { AuthController } from './controllers/auth.controller';
-
-import { VerifyUserUseCase } from '@/application/use-cases/auth/verify-user';
+import { NotificationsController } from './controllers/notifications.controller';
 
 import { DatabaseModule } from '../database/database.module';
 import { MailModule } from '../mail/mail.module';
 
+import { VerifyOtpUseCase } from '@/application/use-cases/auth/verify-otp';
+import { VerifyUserUseCase } from '@/application/use-cases/auth/verify-user';
 import { SendNotificationUseCase } from '@/application/use-cases/notifications/send-notification';
 import { ReadNotificationUseCase } from '@/application/use-cases/notifications/read-notification';
-import { NotificationsController } from './controllers/notifications.controller';
 
 @Module({
   imports: [DatabaseModule, MailModule],
@@ -19,6 +19,7 @@ import { NotificationsController } from './controllers/notifications.controller'
     VerifyUserUseCase,
     SendNotificationUseCase,
     ReadNotificationUseCase,
+    VerifyOtpUseCase,
   ],
 })
 export class HTTPModule {}

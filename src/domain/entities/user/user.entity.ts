@@ -1,9 +1,11 @@
 import { MakeOptional } from '@/helpers/make-optional';
 import { ulid } from 'ulidx';
+import { Otp } from './user-otp.entity';
 
 export interface UserProps {
   id: string;
   email: string;
+  otp?: Otp | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -12,7 +14,7 @@ export class User {
   private props: UserProps;
 
   constructor(
-    props: MakeOptional<UserProps, 'id' | 'createdAt' | 'updatedAt'>,
+    props: MakeOptional<UserProps, 'id' | 'createdAt' | 'updatedAt' | 'otp'>,
   ) {
     this.props = {
       ...props,
@@ -40,10 +42,8 @@ export class User {
     return this.props.email;
   }
 
-  public set email(email: string) {
-    this.validateEmail(email);
-    this.props.email = email;
-    this.props.updatedAt = new Date();
+  public get otp(): Otp | null | undefined {
+    return this.props.otp;
   }
 
   private validateEmail(email: string) {
@@ -53,5 +53,19 @@ export class User {
     if (!isValidEmail) {
       throw new Error('Email Inválido');
     }
+  }
+
+  public assignOtp(code: string) {
+    this.props.otp = new Otp({ code });
+    this.props.updatedAt = new Date();
+  }
+
+  public authenticate(codeAttempt: string): boolean {
+    if (!this.props.otp) return false;
+    if (this.props.otp.code !== codeAttempt) return false;
+    if (!this.props.otp.isValid()) return false;
+
+    this.props.otp = null;
+    return true;
   }
 }

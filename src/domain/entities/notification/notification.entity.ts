@@ -3,7 +3,7 @@ import { Content } from './content.entity';
 import { MakeOptional } from '@/helpers/make-optional';
 
 interface NotificationProps {
-  readonly id: string;
+  id: string;
   content: Content;
   createdAt: Date;
   recipientId: string;

@@ -1,4 +1,4 @@
-import { Notification } from '@/domain/entities/notifications/notification.entity';
+import { Notification } from '@/domain/entities/notification/notification.entity';
 
 export class NotificationViewModel {
   static toHtpp(notification: Notification) {

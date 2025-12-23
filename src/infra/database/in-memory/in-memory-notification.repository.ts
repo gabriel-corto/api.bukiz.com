@@ -1,5 +1,5 @@
 import { ReadNotificationDto } from '@/application/dto/read-notification.dto';
-import { Notification } from '@/domain/entities/notifications/notification.entity';
+import { Notification } from '@/domain/entities/notification/notification.entity';
 import { NotificationRepository } from '@/domain/repositories/notifications.repository';
 
 export class InMemoryNotificationRepository implements NotificationRepository {

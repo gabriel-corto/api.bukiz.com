@@ -1,7 +1,7 @@
 import { Injectable, ServiceUnavailableException } from '@nestjs/common';
 
 import { User } from '@/domain/entities/user/user.entity';
-import { MailGateway, SendMailDto } from '@/domain/gateways/mail.gateway';
+import { MailGateway } from '@/domain/gateways/mail.gateway';
 import { UsersRepository } from '@/domain/repositories/users.repository';
 
 import { VerifyUserDto } from '@/application/dto/verify-user.dto';
@@ -12,42 +12,35 @@ import { generatedOtp } from '@/helpers/otp-generator';
 @Injectable()
 export class VerifyUserUseCase {
   constructor(
-    private mail: MailGateway,
-    private userRepository: UsersRepository,
+    private mailService: MailGateway,
+    private usersRepository: UsersRepository,
   ) {}
 
-  private async sendOtpMail({ to }: SendMailDto) {
+  async execute({ email }: VerifyUserDto): Promise<User> {
+    const code = generatedOtp;
+
+    let user = await this.usersRepository.findByEmail(email);
+
+    if (!user) {
+      user = new User({ email });
+      user.assignOtp(code);
+
+      await this.usersRepository.create(user);
+    } else {
+      user.assignOtp(code);
+      await this.usersRepository.save(user);
+    }
+
     try {
-      await this.mail.send({
-        to,
+      await this.mailService.send({
+        to: user.email,
         subject: 'Verifique seu acesso à Bukiz',
-        content: getLoginOtpTemplate(generatedOtp),
+        content: getLoginOtpTemplate(code),
       });
     } catch {
-      throw new ServiceUnavailableException('MAIL SERVICE UNAVAILABLE!');
-    }
-  }
-
-  async execute({ email }: VerifyUserDto): Promise<User> {
-    const existingUser = await this.userRepository.findByEmail(email);
-    if (existingUser) {
-      await this.sendOtpMail({
-        to: existingUser.email,
-      });
-
-      return existingUser;
+      throw new ServiceUnavailableException('Serviço de e-mail indisponível!');
     }
 
-    const user = new User({
-      email,
-    });
-
-    const newUser = await this.userRepository.create(user);
-
-    await this.sendOtpMail({
-      to: newUser.email,
-    });
-
-    return newUser;
+    return user;
   }
 }
