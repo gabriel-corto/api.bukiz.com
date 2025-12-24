@@ -7,8 +7,8 @@ import { CostumersRepository } from '@/domain/repositories/costumers.repository'
 import { VerifyCostumerEmailDto } from '@/application/dto/verify-costumer-email.dto';
 
 import { renderOtpMailTemplate } from '@/infra/mail/templates/otp-mail-template';
-import { generatedOtp } from '@/helpers/otp-generator';
 import { SendNotificationUseCase } from '../notifications/send-notification';
+import { generateOTP } from '@/helpers/otp-generator';
 
 @Injectable()
 export class VerifyCostumerEmailUseCase {
@@ -19,7 +19,10 @@ export class VerifyCostumerEmailUseCase {
   ) {}
 
   async execute({ email }: VerifyCostumerEmailDto): Promise<Costumer> {
-    const code = generatedOtp;
+    const code = generateOTP(5, {
+      useLetters: false,
+      useSymbols: false,
+    });
 
     let costumer = await this.costumersRepository.findByEmail(email);
 
