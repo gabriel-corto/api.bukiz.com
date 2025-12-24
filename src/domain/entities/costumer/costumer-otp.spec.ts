@@ -1,6 +1,6 @@
 import { Otp } from './costumer-otp.entity';
 
-describe('User OTP Entity', () => {
+describe('Costumer Authentication OTP Code', () => {
   it('Should be able to create a valid OTP Code', () => {
     const otp = new Otp({ code: '12345' });
 

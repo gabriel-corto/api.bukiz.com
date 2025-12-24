@@ -34,7 +34,10 @@ export class AuthController {
     return {
       statusCode: 200,
       message: 'AUTHORIZED',
-      data: CostumerViewModel.toHttp(costumer),
+      data: {
+        costumer: CostumerViewModel.toHttp(costumer),
+        authToken: '',
+      },
     };
   }
 }
