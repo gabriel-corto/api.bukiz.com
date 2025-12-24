@@ -4,6 +4,7 @@ import { VerifyCostumerEmailUseCase } from '@/application/use-cases/auth/verify-
 import { VerifyCostumerAuthCodeUseCase } from '@/application/use-cases/auth/verify-costumer-otp';
 
 import { CostumerViewModel } from '../view-model/costumer-view-model';
+import { Public } from '@/infra/shared/decorators/public.decorator';
 
 import { VerifyCostumerEmailBody } from '../dto/verify-costumer-email-body';
 import { VerifyOtpBody } from '../dto/verify-costumer-otp-body';
@@ -15,6 +16,7 @@ export class AuthController {
     private verifyOtp: VerifyCostumerAuthCodeUseCase,
   ) {}
 
+  @Public()
   @Post('/verify-email')
   @HttpCode(200)
   async verifyEmail(@Body() body: VerifyCostumerEmailBody) {
@@ -26,17 +28,22 @@ export class AuthController {
     };
   }
 
+  @Public()
   @Post('/verify-otp')
   async verifyUserOtp(@Body() body: VerifyOtpBody) {
     const { code, email } = body;
-    const costumer = await this.verifyOtp.execute({ code, email });
+
+    const { costumer, accessToken } = await this.verifyOtp.execute({
+      code,
+      email,
+    });
 
     return {
       statusCode: 200,
-      message: 'AUTHORIZED',
+      message: 'Authorized',
       data: {
         costumer: CostumerViewModel.toHttp(costumer),
-        authToken: '',
+        accessToken: accessToken,
       },
     };
   }

@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { ulid } from 'ulidx';
 
 import { Notification } from '@/domain/entities/notification/notification.entity';
 import { NotificationRepository } from '@/domain/repositories/notifications.repository';
@@ -12,11 +11,11 @@ export class SendNotificationUseCase {
   constructor(private notificationRepository: NotificationRepository) {}
 
   async execute(data: SendNotificationDto): Promise<Notification> {
-    const { content } = data;
+    const { content, recipientId } = data;
 
     const notification = new Notification({
       content: new Content(content),
-      recipientId: ulid(),
+      recipientId,
     });
 
     const createdNotification =

@@ -5,4 +5,7 @@ export abstract class NotificationRepository {
   abstract save(data: Notification): Promise<Notification>;
   abstract findById(data: ReadNotificationDto): Promise<Notification | null>;
   abstract findAll(): Promise<Notification[]>;
+  abstract findCostumerNotifications(
+    costumerId: string,
+  ): Promise<Notification[]>;
 }

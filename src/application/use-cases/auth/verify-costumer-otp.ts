@@ -1,15 +1,21 @@
+import { AuthTokenPayload } from '@/types/api';
+
 import {
   Injectable,
   NotFoundException,
   BadRequestException,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
 import { CostumersRepository } from '@/domain/repositories/costumers.repository';
 import { VerifyOtpBody } from '@/infra/http/dto/verify-costumer-otp-body';
 
 @Injectable()
 export class VerifyCostumerAuthCodeUseCase {
-  constructor(private costumersRepository: CostumersRepository) {}
+  constructor(
+    private costumersRepository: CostumersRepository,
+    private jwtService: JwtService,
+  ) {}
 
   async execute({ code, email }: VerifyOtpBody) {
     const costumer = await this.costumersRepository.findByEmail(email);
@@ -21,6 +27,14 @@ export class VerifyCostumerAuthCodeUseCase {
 
     await this.costumersRepository.save(costumer);
 
-    return costumer;
+    const tokenPayload: AuthTokenPayload = {
+      sub: costumer.id,
+      email: costumer.email,
+    };
+
+    return {
+      costumer,
+      accessToken: await this.jwtService.signAsync(tokenPayload),
+    };
   }
 }

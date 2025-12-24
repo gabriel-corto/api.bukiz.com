@@ -8,12 +8,14 @@ import { VerifyCostumerEmailDto } from '@/application/dto/verify-costumer-email.
 
 import { renderOtpMailTemplate } from '@/infra/mail/templates/otp-mail-template';
 import { generatedOtp } from '@/helpers/otp-generator';
+import { SendNotificationUseCase } from '../notifications/send-notification';
 
 @Injectable()
 export class VerifyCostumerEmailUseCase {
   constructor(
     private mailService: MailGateway,
     private costumersRepository: CostumersRepository,
+    private sendNotification: SendNotificationUseCase,
   ) {}
 
   async execute({ email }: VerifyCostumerEmailDto): Promise<Costumer> {
@@ -26,16 +28,23 @@ export class VerifyCostumerEmailUseCase {
       costumer.assignOtp(code);
 
       await this.costumersRepository.create(costumer);
+
+      await this.sendNotification.execute({
+        content: 'Damos-lhe boas vindas ao Bukiz!',
+        recipientId: costumer.id,
+      });
     } else {
       costumer.assignOtp(code);
       await this.costumersRepository.save(costumer);
     }
 
     try {
+      const html = renderOtpMailTemplate(code);
+
       await this.mailService.send({
         to: costumer.email,
         subject: 'Verifique seu acesso à Bukiz',
-        content: renderOtpMailTemplate(code),
+        content: html,
       });
     } catch {
       throw new ServiceUnavailableException('Serviço de e-mail indisponível!');

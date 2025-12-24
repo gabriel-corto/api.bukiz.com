@@ -1,9 +1,11 @@
+import type { AuthTokenPayload } from '@/types/api';
 import { ApiResponse } from '@nestjs/swagger';
 import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 
 import { NotificationRepository } from '@/domain/repositories/notifications.repository';
 import { ReadNotificationUseCase } from '@/application/use-cases/notifications/read-notification';
 import { SendNotificationUseCase } from '@/application/use-cases/notifications/send-notification';
+import { CurrentCostumer } from '@/infra/shared/decorators/current.costumer.decorator';
 
 import { SendNotificationBody } from '../dto/send-notification-body';
 import { ReadNotificationQuery } from '../dto/read-notification-query';
@@ -17,9 +19,24 @@ export class NotificationsController {
     private notificationRepository: NotificationRepository,
   ) {}
 
-  @Get('')
+  @Get()
   async findAll() {
     const notifications = await this.notificationRepository.findAll();
+    return {
+      data: notifications.map((notification) =>
+        NotificationViewModel.toHtpp(notification),
+      ),
+    };
+  }
+
+  @Get('/me')
+  async findCostumerNotifications(
+    @CurrentCostumer() costumer: AuthTokenPayload,
+  ) {
+    const costumerId = costumer.sub;
+
+    const notifications =
+      await this.notificationRepository.findCostumerNotifications(costumerId);
     return {
       data: notifications.map((notification) =>
         NotificationViewModel.toHtpp(notification),
