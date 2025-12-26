@@ -1,19 +1,21 @@
 import { Module } from '@nestjs/common';
 
-import { AppController } from './controllers/app.controller';
-import { AuthController } from './controllers/auth.controller';
-import { NotificationsController } from './controllers/notifications.controller';
+import { JwtModule } from '@nestjs/jwt';
+import { APP_GUARD } from '@nestjs/core';
 
 import { DatabaseModule } from '../database/database.module';
 import { MailModule } from '../mail/mail.module';
+import { AuthGuard } from '../shared/guard/auth.guard';
 
 import { VerifyCostumerAuthCodeUseCase } from '@/application/use-cases/auth/verify-costumer-otp';
 import { VerifyCostumerEmailUseCase } from '@/application/use-cases/auth/verify-costumer-email';
 import { SendNotificationUseCase } from '@/application/use-cases/notifications/send-notification';
 import { ReadNotificationUseCase } from '@/application/use-cases/notifications/read-notification';
-import { JwtModule } from '@nestjs/jwt';
-import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from '../shared/guard/auth.guard';
+
+import { AppController } from './controllers/app.controller';
+import { AuthController } from './controllers/auth.controller';
+import { ProfileController } from './controllers/profile.controller';
+import { NotificationsController } from './controllers/notifications.controller';
 
 @Module({
   imports: [
@@ -25,7 +27,12 @@ import { AuthGuard } from '../shared/guard/auth.guard';
       signOptions: { expiresIn: '1d' },
     }),
   ],
-  controllers: [AuthController, AppController, NotificationsController],
+  controllers: [
+    AuthController,
+    AppController,
+    NotificationsController,
+    ProfileController,
+  ],
   providers: [
     VerifyCostumerEmailUseCase,
     SendNotificationUseCase,

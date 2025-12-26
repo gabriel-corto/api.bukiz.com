@@ -16,6 +16,12 @@ export class InMemoryCostumersRepository implements CostumersRepository {
     return costumer || null;
   }
 
+  async findCostumerProfile(id: string): Promise<Costumer> {
+    await Promise.resolve();
+    const costumer = this.items.find((item) => item.id === id);
+    return costumer as Costumer;
+  }
+
   async create(costumer: Costumer): Promise<Costumer> {
     await Promise.resolve();
     this.items.push(costumer);

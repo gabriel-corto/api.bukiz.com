@@ -28,6 +28,18 @@ export class PrismaCostumersRepository implements CostumersRepository {
     return user ? PrismaCostumerMapper.toDomain(user) : null;
   }
 
+  async findCostumerProfile(id: string): Promise<Costumer> {
+    const costumer = await this.prisma.costumer.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    return costumer
+      ? PrismaCostumerMapper.toDomain(costumer)
+      : ({} as Costumer);
+  }
+
   async save(user: Costumer): Promise<Costumer> {
     const data = PrismaCostumerMapper.toPrisma(user);
     const updatedUser = await this.prisma.costumer.upsert({

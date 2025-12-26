@@ -10,6 +10,7 @@ import { CurrentCostumer } from '@/infra/shared/decorators/current.costumer.deco
 import { SendNotificationBody } from '../dto/send-notification-body';
 import { ReadNotificationQuery } from '../dto/read-notification-query';
 import { NotificationViewModel } from '../view-model/notification-view-model';
+import { Public } from '@/infra/shared/decorators/public.decorator';
 
 @Controller('notifications')
 export class NotificationsController {
@@ -45,6 +46,7 @@ export class NotificationsController {
   }
 
   @Post('')
+  @Public()
   async send(@Body() body: SendNotificationBody) {
     const { content, recipientId } = body;
 
@@ -58,6 +60,7 @@ export class NotificationsController {
     };
   }
 
+  @Public()
   @ApiResponse({ status: 200 })
   @Patch(':notificationId')
   async read(@Param() param: ReadNotificationQuery) {
