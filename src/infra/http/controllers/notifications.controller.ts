@@ -5,12 +5,13 @@ import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { NotificationRepository } from '@/domain/repositories/notifications.repository';
 import { ReadNotificationUseCase } from '@/application/use-cases/notifications/read-notification';
 import { SendNotificationUseCase } from '@/application/use-cases/notifications/send-notification';
+
 import { CurrentCostumer } from '@/infra/shared/decorators/current.costumer.decorator';
 
 import { SendNotificationBody } from '../dto/send-notification-body';
 import { ReadNotificationQuery } from '../dto/read-notification-query';
-import { NotificationViewModel } from '../view-model/notification-view-model';
 import { Public } from '@/infra/shared/decorators/public.decorator';
+import { NotificationViewModel } from '../view-model/notification-view-model';
 
 @Controller('notifications')
 export class NotificationsController {
