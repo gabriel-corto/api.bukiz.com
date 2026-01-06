@@ -13,7 +13,7 @@ export class SendNotificationUseCase {
   async execute(data: SendNotificationDto): Promise<Notification> {
     const { content, recipientId } = data;
 
-    const notification = new Notification({
+    const notification = Notification.create({
       content: new Content(content),
       recipientId,
     });

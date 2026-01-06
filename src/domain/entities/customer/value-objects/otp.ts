@@ -1,4 +1,3 @@
-import { MakeOptional } from '@/helpers/make-optional';
 import { add } from 'date-fns';
 
 export interface OtpProps {
@@ -7,17 +6,25 @@ export interface OtpProps {
 }
 
 export class Otp {
-  public readonly props: OtpProps;
+  private readonly props: OtpProps;
 
-  constructor(props: MakeOptional<OtpProps, 'expiresIn'>) {
-    if (!this.validateOtpCodeLenght(props.code)) {
+  private constructor(props: OtpProps) {
+    this.props = props;
+    Object.freeze(this);
+  }
+
+  public static create(code: string): Otp {
+    if (!Otp.validateOtpCodeLength(code)) {
       throw new Error('O OTP deve ter exatamente 5 caracteres.');
     }
 
-    this.props = {
-      code: props.code,
-      expiresIn: props.expiresIn ?? this.addOtpExpirationTime(new Date()),
-    };
+    const expiresIn = Otp.addOtpExpirationTime(new Date());
+
+    return new Otp({ code, expiresIn });
+  }
+
+  public static restore(props: OtpProps): Otp {
+    return new Otp(props);
   }
 
   get code(): string {
@@ -33,11 +40,11 @@ export class Otp {
     return currentDate < this.props.expiresIn;
   }
 
-  private validateOtpCodeLenght(code: string): boolean {
+  private static validateOtpCodeLength(code: string): boolean {
     return code.length === 5;
   }
 
-  private addOtpExpirationTime(date: Date): Date {
+  private static addOtpExpirationTime(date: Date): Date {
     return add(date, {
       minutes: 2,
     });

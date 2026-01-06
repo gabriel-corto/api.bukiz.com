@@ -15,18 +15,27 @@ export interface CustomerProps {
 export class Customer {
   private props: CustomerProps;
 
-  constructor(
+  private constructor(props: CustomerProps) {
+    this.props = props;
+  }
+
+  public static create(
     props: MakeOptional<
       CustomerProps,
       'id' | 'createdAt' | 'updatedAt' | 'otp'
     >,
-  ) {
-    this.props = {
+  ): Customer {
+    return new Customer({
       ...props,
       id: props.id ?? ulid(),
       createdAt: props.createdAt ?? new Date(),
       updatedAt: props.updatedAt ?? new Date(),
-    };
+      otp: props.otp ?? null,
+    });
+  }
+
+  public static restore(props: CustomerProps): Customer {
+    return new Customer(props);
   }
 
   public get id(): string {
@@ -37,7 +46,7 @@ export class Customer {
     return this.props.createdAt;
   }
 
-  public get updatedAt(): Date | string | undefined {
+  public get updatedAt(): Date {
     return this.props.updatedAt;
   }
 
@@ -50,7 +59,7 @@ export class Customer {
   }
 
   public assignOtp(code: string) {
-    this.props.otp = new Otp({ code });
+    this.props.otp = Otp.create(code);
     this.props.updatedAt = new Date();
   }
 

@@ -3,7 +3,7 @@ import { Notification } from './notification.entity';
 
 describe('Notification Entity', () => {
   it('Should generate a valid ID and createdAt date', () => {
-    const notification = new Notification({
+    const notification = Notification.create({
       content: new Content('Conta criada com sucesso!'),
       recipientId: crypto.randomUUID(),
     });
@@ -17,7 +17,7 @@ describe('Notification Entity', () => {
 
   it('should not be able to create a notification with less than 5 characters', () => {
     expect(() => {
-      new Notification({
+      Notification.create({
         content: new Content('Buki'),
         recipientId: crypto.randomUUID(),
       });
@@ -26,7 +26,7 @@ describe('Notification Entity', () => {
 
   it('should not be able to create a notification with more than 240 characters', () => {
     expect(() => {
-      new Notification({
+      Notification.create({
         content: new Content('Conta criada com sucesso!'.repeat(241)),
         recipientId: crypto.randomUUID(),
       });
@@ -34,7 +34,7 @@ describe('Notification Entity', () => {
   });
 
   it('should mark notification as read', () => {
-    const notification = new Notification({
+    const notification = Notification.create({
       content: new Content('Conta criada com sucesso!'),
       recipientId: crypto.randomUUID(),
     });

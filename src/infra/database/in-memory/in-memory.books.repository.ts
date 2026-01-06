@@ -9,7 +9,7 @@ export class InMemoryBooksRepository implements BooksRepository {
     return this.books;
   }
 
-  async create(book: Book): Promise<Book> {
+  async register(book: Book): Promise<Book> {
     await Promise.resolve();
     this.books.push(book);
     return book;

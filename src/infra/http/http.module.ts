@@ -17,7 +17,7 @@ import { AuthController } from './controllers/auth.controller';
 import { ProfileController } from './controllers/profile.controller';
 import { NotificationsController } from './controllers/notifications.controller';
 import { BooksController } from './controllers/books.controller';
-import { CreateBookUseCase } from '@/application/use-cases/books/create-book';
+import { RegisterBookUseCase } from '@/application/use-cases/books/register-book';
 
 @Module({
   imports: [
@@ -41,7 +41,7 @@ import { CreateBookUseCase } from '@/application/use-cases/books/create-book';
     SendNotificationUseCase,
     ReadNotificationUseCase,
     VerifyCustomerAuthCodeUseCase,
-    CreateBookUseCase,
+    RegisterBookUseCase,
     {
       provide: APP_GUARD,
       useClass: AuthGuard,

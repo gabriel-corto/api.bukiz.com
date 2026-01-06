@@ -15,7 +15,7 @@ export class PrismaNotificationsMapper {
   }
 
   static toDomain(raw: PrismaNotification): Notification {
-    return new Notification({
+    return Notification.create({
       content: new Content(raw.content),
       recipientId: raw.recipientId,
       readAt: raw.readAt,

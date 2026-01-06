@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CreateBookBody } from '../dto/create-book-body';
-import { CreateBookUseCase } from '@/application/use-cases/books/create-book';
+import { RegisterBookUseCase } from '@/application/use-cases/books/register-book';
 import { BooksViewModel } from '../view-model/books-view-model';
 import { Public } from '@/infra/shared/decorators/public.decorator';
 import { BooksRepository } from '@/domain/repositories/books.repository';
@@ -8,7 +8,7 @@ import { BooksRepository } from '@/domain/repositories/books.repository';
 @Controller('/books')
 export class BooksController {
   constructor(
-    private createBook: CreateBookUseCase,
+    private createBook: RegisterBookUseCase,
     private booksRepository: BooksRepository,
   ) {}
 

@@ -17,10 +17,10 @@ export class PrismaBooksMapper {
   }
 
   static toDomain(raw: PrismaBook): Book {
-    return new Book({
+    return Book.register({
       id: raw.id,
       author: raw.author,
-      price: new Price(raw.price),
+      price: Price.create(raw.price),
       category: raw.category,
       stock: raw.stock,
       title: raw.title,

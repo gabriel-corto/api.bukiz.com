@@ -2,7 +2,7 @@ import { ulid } from 'ulidx';
 import { Content } from './content.entity';
 import { MakeOptional } from '@/helpers/make-optional';
 
-interface NotificationProps {
+export interface NotificationProps {
   id: string;
   content: Content;
   hasRead: boolean;
@@ -14,16 +14,27 @@ interface NotificationProps {
 export class Notification {
   private props: NotificationProps;
 
-  constructor(
-    props: MakeOptional<NotificationProps, 'id' | 'createdAt' | 'hasRead'>,
-  ) {
-    this.props = {
+  private constructor(props: NotificationProps) {
+    this.props = props;
+  }
+
+  public static create(
+    props: MakeOptional<
+      NotificationProps,
+      'id' | 'createdAt' | 'hasRead' | 'readAt'
+    >,
+  ): Notification {
+    return new Notification({
       ...props,
       id: props.id ?? ulid(),
-      hasRead: props.hasRead ?? false,
-      readAt: props.readAt ?? null,
+      hasRead: false,
+      readAt: null,
       createdAt: props.createdAt ?? new Date(),
-    };
+    });
+  }
+
+  public static restore(props: NotificationProps): Notification {
+    return new Notification(props);
   }
 
   get createdAt(): Date {

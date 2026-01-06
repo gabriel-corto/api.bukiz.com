@@ -3,11 +3,10 @@ export class Price {
 
   constructor(amount: number) {
     this.value = amount;
-    this.validate();
   }
 
-  private validate() {
-    if (this.value <= 0) {
+  private static validate(amount: number) {
+    if (amount <= 0) {
       throw new Error('O Preço não pode ser negativo, nem igual à 0!');
     }
   }
@@ -20,6 +19,7 @@ export class Price {
   }
 
   public static create(amount: number): Price {
+    Price.validate(amount);
     return new Price(amount);
   }
 

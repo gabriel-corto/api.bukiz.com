@@ -28,7 +28,7 @@ export class VerifyCustomerEmailUseCase {
     let customer = await this.customersRepository.findByEmail(email);
 
     if (!customer) {
-      customer = new Customer({ email: Email.create(email) });
+      customer = Customer.create({ email: Email.create(email) });
       customer.assignOtp(code);
 
       await this.customersRepository.create(customer);

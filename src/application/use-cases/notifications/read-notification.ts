@@ -1,6 +1,6 @@
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ReadNotificationDto } from '@/application/dto/read-notification.dto';
 import { NotificationRepository } from '@/domain/repositories/notifications.repository';
-import { BadRequestException, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ReadNotificationUseCase {

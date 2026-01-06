@@ -6,13 +6,13 @@ import { BooksRepository } from '@/domain/repositories/books.repository';
 import { CreateBookDto } from '@/application/dto/create-book.dto';
 
 @Injectable()
-export class CreateBookUseCase {
+export class RegisterBookUseCase {
   constructor(private booksRepository: BooksRepository) {}
 
   async execute(data: CreateBookDto): Promise<Book> {
     const { title, author, stock, category, price } = data;
 
-    const book = new Book({
+    const book = Book.register({
       author,
       title,
       stock,
@@ -20,6 +20,6 @@ export class CreateBookUseCase {
       price: new Price(price),
     });
 
-    return await this.booksRepository.create(book);
+    return await this.booksRepository.register(book);
   }
 }

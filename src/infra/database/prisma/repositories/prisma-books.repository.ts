@@ -13,7 +13,7 @@ export class PrismaBooksRepository implements BooksRepository {
     return books.map((book) => PrismaBooksMapper.toDomain(book));
   }
 
-  async create(book: Book): Promise<Book> {
+  async register(book: Book): Promise<Book> {
     const createdBook = await this.prisma.book.create({
       data: PrismaBooksMapper.toPrisma(book),
     });

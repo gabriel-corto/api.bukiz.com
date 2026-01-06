@@ -1,9 +1,9 @@
 import { InMemoryBooksRepository } from '@/infra/database/in-memory/in-memory.books.repository';
-import { CreateBookUseCase } from './create-book';
+import { RegisterBookUseCase } from './register-book';
 
 describe('Create Book', () => {
   const booksRepository = new InMemoryBooksRepository();
-  const createBook = new CreateBookUseCase(booksRepository);
+  const createBook = new RegisterBookUseCase(booksRepository);
 
   it('Should be able to create and save a new book', async () => {
     const book = await createBook.execute({

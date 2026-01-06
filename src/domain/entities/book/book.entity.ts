@@ -1,6 +1,7 @@
-import { constants } from '@/infra/constant/constant';
 import { ulid } from 'ulidx';
 import { Price } from './value-objects/price';
+
+import { constants } from '@/infra/constant/constant';
 import { MakeOptional } from '@/helpers/make-optional';
 
 export type BookCategory =
@@ -10,7 +11,7 @@ export type BookCategory =
   | 'Education'
   | 'Health';
 
-interface BookProps {
+export interface BookProps {
   id: string;
   title: string;
   cover?: string | null;
@@ -24,14 +25,24 @@ interface BookProps {
 export class Book {
   private props: BookProps;
 
-  constructor(props: MakeOptional<BookProps, 'id' | 'cover' | 'createdAt'>) {
-    this.props = {
+  private constructor(props: BookProps) {
+    this.props = props;
+  }
+
+  public static register(
+    props: MakeOptional<BookProps, 'id' | 'cover' | 'createdAt' | 'stock'>,
+  ): Book {
+    return new Book({
       ...props,
       id: props.id ?? ulid(),
       stock: props.stock ?? 10,
-      cover: props.cover ?? constants.default_cover_ur,
+      cover: props.cover ?? constants.default_cover_url,
       createdAt: props.createdAt ?? new Date(),
-    };
+    });
+  }
+
+  public static restore(props: BookProps): Book {
+    return new Book(props);
   }
 
   get id(): string {

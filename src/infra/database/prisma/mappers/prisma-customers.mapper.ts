@@ -1,6 +1,7 @@
 import { Otp } from '@/domain/entities/customer/value-objects/otp';
 import { Customer } from '@/domain/entities/customer/customer.entity';
 import { Email } from '@/domain/entities/customer/value-objects/email';
+
 import { Prisma, Customer as PrismaCustomer } from '@prisma/client';
 
 export class PrismaCustomerMapper {
@@ -18,10 +19,10 @@ export class PrismaCustomerMapper {
   static toDomain(raw: PrismaCustomer): Customer {
     const otp =
       raw.otp_code && raw.otp_expires_in
-        ? new Otp({ code: raw.otp_code, expiresIn: raw.otp_expires_in })
+        ? Otp.restore({ code: raw.otp_code, expiresIn: raw.otp_expires_in })
         : null;
 
-    return new Customer({
+    return Customer.restore({
       id: raw.id,
       email: Email.create(raw.email),
       createdAt: raw.createdAt,
