@@ -17,7 +17,9 @@ export class VerifyCostumerAuthCodeUseCase {
     private jwtService: JwtService,
   ) {}
 
-  async execute({ code, email }: VerifyOtpBody) {
+  async execute(data: VerifyOtpBody) {
+    const { email, code } = data;
+
     const costumer = await this.costumersRepository.findByEmail(email);
     if (!costumer) throw new NotFoundException('Cliente não encontrado!');
 

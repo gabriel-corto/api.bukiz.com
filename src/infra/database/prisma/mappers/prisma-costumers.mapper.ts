@@ -1,4 +1,4 @@
-import { Otp } from '@/domain/entities/costumer/costumer-otp.entity';
+import { Otp } from '@/domain/entities/costumer/value-objects/costumer-otp.entity';
 import { Costumer } from '@/domain/entities/costumer/costumer.entity';
 import { Prisma, Costumer as PrismaCostumer } from '@prisma/client';
 
@@ -20,14 +20,12 @@ export class PrismaCostumerMapper {
         ? new Otp({ code: raw.otp_code, expiresIn: raw.otp_expires_in })
         : null;
 
-    const costumer = new Costumer({
+    return new Costumer({
       id: raw.id,
       email: raw.email,
       createdAt: raw.createdAt,
       updatedAt: raw.updatedAt,
       otp: otp,
     });
-
-    return costumer;
   }
 }

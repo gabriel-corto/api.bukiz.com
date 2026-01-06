@@ -1,6 +1,7 @@
-import { ReadNotificationDto } from '@/application/dto/read-notification.dto';
 import { Notification } from '@/domain/entities/notification/notification.entity';
 import { NotificationRepository } from '@/domain/repositories/notifications.repository';
+
+import { ReadNotificationDto } from '@/application/dto/read-notification.dto';
 
 export class InMemoryNotificationRepository implements NotificationRepository {
   public notifications: Notification[] = [];

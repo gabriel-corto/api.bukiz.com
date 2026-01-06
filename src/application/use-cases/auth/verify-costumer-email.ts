@@ -7,7 +7,6 @@ import { CostumersRepository } from '@/domain/repositories/costumers.repository'
 import { VerifyCostumerEmailDto } from '@/application/dto/verify-costumer-email.dto';
 
 import { renderOtpMailTemplate } from '@/infra/mail/templates/otp-mail-template';
-import { SendNotificationUseCase } from '../notifications/send-notification';
 import { generateOTP } from '@/helpers/otp-generator';
 
 @Injectable()
@@ -15,10 +14,11 @@ export class VerifyCostumerEmailUseCase {
   constructor(
     private mailService: MailGateway,
     private costumersRepository: CostumersRepository,
-    private sendNotification: SendNotificationUseCase,
   ) {}
 
-  async execute({ email }: VerifyCostumerEmailDto): Promise<Costumer> {
+  async execute(data: VerifyCostumerEmailDto): Promise<Costumer> {
+    const { email } = data;
+
     const code = generateOTP(5, {
       useLetters: false,
       useSymbols: false,
@@ -31,11 +31,6 @@ export class VerifyCostumerEmailUseCase {
       costumer.assignOtp(code);
 
       await this.costumersRepository.create(costumer);
-
-      await this.sendNotification.execute({
-        content: 'Damos-lhe boas vindas ao Bukiz!',
-        recipientId: costumer.id,
-      });
     } else {
       costumer.assignOtp(code);
       await this.costumersRepository.save(costumer);

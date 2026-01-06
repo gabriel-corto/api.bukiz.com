@@ -28,3 +28,24 @@ model Notification {
 
   @@map("notifications")
 }
+
+model Book {
+  id        String   @id
+  title     String
+  cover     String?
+  author    String
+  category  BookCategory
+  price     Int
+  stock     Int
+  createdAt DateTime
+
+  @@map("books")
+}
+
+enum BookCategory {
+  Finance
+  Technology
+  Business
+  Education
+  Health
+}

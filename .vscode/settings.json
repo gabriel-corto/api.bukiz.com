@@ -1,3 +1,79 @@
 {
-  "prisma.pinToPrisma6": true
+  "prisma.pinToPrisma6": true,
+  "editor.fontFamily": "'Jetbrains Mono'",
+  "editor.fontSize": 12,
+  "editor.tabSize": 2,
+  "editor.fontLigatures": true,
+  "editor.fontWeight": "600",
+  "editor.wordWrap": "on",
+  "editor.cursorSmoothCaretAnimation": "on",
+
+  "editor.formatOnSave": true,
+
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.removeUnusedImports": "explicit"
+  },
+
+  "eslint.format.enable": false,
+
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.fontSize": 12,
+  "terminal.integrated.fontFamily": "JetBrains Mono",
+
+  "window.zoomLevel": 0,
+
+  "[prisma]": {
+    "editor.formatOnSave": true
+  },
+  "workbench.productIconTheme": "fluent-icons",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+
+  "material-icon-theme.activeIconPack": "nest",
+  "material-icon-theme.folders.associations": {
+    "use-cases": "functions",
+    "domain": "class",
+    "gateways": "contract",
+    "migrations": "tools",
+    "entities": "admin",
+    "dto": "rules",
+    "controllers": "routes",
+    "services": "aws",
+    "repositories": "database",
+    "factories": "build",
+    "adapters": "bridge",
+    "validators": "rules",
+    "interceptors": "middleware",
+    "guards": "auth",
+    "config": "settings",
+    "constants": "static",
+    "types": "typescript",
+    "helpers": "utils",
+    "jobs": "workers",
+    "events": "emitters",
+    "subscribers": "listeners",
+    "tests": "specs",
+    "seeders": "populate",
+    "uploads": "storage",
+    "views": "templates",
+    "infra": "aws",
+    "middlewares": "pipeline",
+    "errors": "exceptions",
+    "logging": "monitoring",
+    "permissions": "rbac",
+    "i18n": "languages",
+    "policies": "permissions-logic",
+    "cli": "commands",
+    "value-objects": "command",
+    "view-model": "template"
+  },
+  "workbench.iconTheme": "material-icon-theme",
+  "editor.minimap.enabled": false,
+
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "git.autofetch": true
 }

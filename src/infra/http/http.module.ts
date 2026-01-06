@@ -16,6 +16,8 @@ import { AppController } from './controllers/app.controller';
 import { AuthController } from './controllers/auth.controller';
 import { ProfileController } from './controllers/profile.controller';
 import { NotificationsController } from './controllers/notifications.controller';
+import { BooksController } from './controllers/books.controller';
+import { CreateBookUseCase } from '@/application/use-cases/books/create-book';
 
 @Module({
   imports: [
@@ -32,12 +34,14 @@ import { NotificationsController } from './controllers/notifications.controller'
     AppController,
     NotificationsController,
     ProfileController,
+    BooksController,
   ],
   providers: [
     VerifyCostumerEmailUseCase,
     SendNotificationUseCase,
     ReadNotificationUseCase,
     VerifyCostumerAuthCodeUseCase,
+    CreateBookUseCase,
     {
       provide: APP_GUARD,
       useClass: AuthGuard,

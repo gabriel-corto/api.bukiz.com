@@ -15,7 +15,7 @@ export class PrismaNotificationsMapper {
   }
 
   static toDomain(raw: PrismaNotification): Notification {
-    const notification = new Notification({
+    return new Notification({
       content: new Content(raw.content),
       recipientId: raw.recipientId,
       readAt: raw.readAt,
@@ -23,7 +23,5 @@ export class PrismaNotificationsMapper {
       id: raw.id,
       hasRead: raw.hasRead,
     });
-
-    return notification;
   }
 }

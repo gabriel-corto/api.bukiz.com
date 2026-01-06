@@ -1,7 +1,7 @@
 import { ulid } from 'ulidx';
 
 import { MakeOptional } from '@/helpers/make-optional';
-import { Otp } from './costumer-otp.entity';
+import { Otp } from './value-objects/costumer-otp.entity';
 
 export interface CostumerProps {
   id: string;

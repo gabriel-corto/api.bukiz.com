@@ -1,4 +1,4 @@
-import { InMemoryCostumersRepository } from '@test/repositories/in-memory-costumers.repository';
+import { InMemoryCostumersRepository } from '@/infra/database/in-memory/in-memory-costumers.repository';
 import { FakeMailService } from '@test/gateways/fake-mail.gateway';
 import { VerifyCostumerEmailUseCase } from './verify-costumer-email';
 
