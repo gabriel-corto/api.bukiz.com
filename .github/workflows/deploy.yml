@@ -45,7 +45,7 @@ jobs:
         run: pnpm test
 
       - name: Run Build
-        run: pnpm start:prod
+        run: pnpm build
 
   deploy:
     needs: build-and-test
