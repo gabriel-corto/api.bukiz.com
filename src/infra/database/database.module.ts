@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { NotificationRepository } from '@/domain/repositories/notifications.repository';
-import { CostumersRepository } from '@/domain/repositories/costumers.repository';
+import { CustomersRepository } from '@/domain/repositories/customers.repository';
 
 import { PrismaService } from './prisma/prisma.service';
-import { PrismaCostumersRepository } from './prisma/repositories/prisma-costumers.repository';
+import { PrismaCustomersRepository } from './prisma/repositories/prisma-customers.repository';
 import { PrismaNotificationsRepository } from './prisma/repositories/prisma-notifications.repository';
 import { BooksRepository } from '@/domain/repositories/books.repository';
 import { PrismaBooksRepository } from './prisma/repositories/prisma-books.repository';
@@ -12,8 +12,8 @@ import { PrismaBooksRepository } from './prisma/repositories/prisma-books.reposi
   providers: [
     PrismaService,
     {
-      provide: CostumersRepository,
-      useClass: PrismaCostumersRepository,
+      provide: CustomersRepository,
+      useClass: PrismaCustomersRepository,
     },
     {
       provide: NotificationRepository,
@@ -24,6 +24,6 @@ import { PrismaBooksRepository } from './prisma/repositories/prisma-books.reposi
       useClass: PrismaBooksRepository,
     },
   ],
-  exports: [CostumersRepository, NotificationRepository, BooksRepository],
+  exports: [CustomersRepository, NotificationRepository, BooksRepository],
 })
 export class DatabaseModule {}

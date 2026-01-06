@@ -56,10 +56,10 @@ export class PrismaNotificationsRepository implements NotificationRepository {
       : null;
   }
 
-  async findCostumerNotifications(costumerId: string): Promise<Notification[]> {
+  async findCustomerNotifications(customerId: string): Promise<Notification[]> {
     const notifications = await this.prisma.notification.findMany({
       where: {
-        recipientId: costumerId,
+        recipientId: customerId,
       },
     });
 

@@ -7,8 +7,8 @@ import { DatabaseModule } from '../database/database.module';
 import { MailModule } from '../mail/mail.module';
 import { AuthGuard } from '../shared/guard/auth.guard';
 
-import { VerifyCostumerAuthCodeUseCase } from '@/application/use-cases/auth/verify-costumer-otp';
-import { VerifyCostumerEmailUseCase } from '@/application/use-cases/auth/verify-costumer-email';
+import { VerifyCustomerAuthCodeUseCase } from '@/application/use-cases/auth/verify-customer-otp';
+import { VerifyCustomerEmailUseCase } from '@/application/use-cases/auth/verify-customer-email';
 import { SendNotificationUseCase } from '@/application/use-cases/notifications/send-notification';
 import { ReadNotificationUseCase } from '@/application/use-cases/notifications/read-notification';
 
@@ -37,10 +37,10 @@ import { CreateBookUseCase } from '@/application/use-cases/books/create-book';
     BooksController,
   ],
   providers: [
-    VerifyCostumerEmailUseCase,
+    VerifyCustomerEmailUseCase,
     SendNotificationUseCase,
     ReadNotificationUseCase,
-    VerifyCostumerAuthCodeUseCase,
+    VerifyCustomerAuthCodeUseCase,
     CreateBookUseCase,
     {
       provide: APP_GUARD,

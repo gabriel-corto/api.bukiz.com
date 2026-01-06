@@ -38,11 +38,11 @@ export class InMemoryNotificationRepository implements NotificationRepository {
     return notification || null;
   }
 
-  async findCostumerNotifications(costumerId: string): Promise<Notification[]> {
+  async findCustomerNotifications(customerId: string): Promise<Notification[]> {
     await Promise.resolve();
 
     return this.notifications.filter(
-      (notification) => notification.recipientId === costumerId,
+      (notification) => notification.recipientId === customerId,
     );
   }
 }

@@ -8,6 +8,7 @@ describe('Book Entity', () => {
       price: new Price(13500),
       stock: 20,
       title: 'Clean Code',
+      category: 'Technology',
     });
 
     expect(book).toBeDefined();

@@ -1,25 +1,25 @@
 import type { AuthTokenPayload } from '@/types/api';
 import { Controller, Get } from '@nestjs/common';
 
-import { CurrentCostumer } from '@/infra/shared/decorators/current.costumer.decorator';
+import { CurrentCustomer } from '@/infra/shared/decorators/current-customer.decorator';
 
-import { CostumersRepository } from '@/domain/repositories/costumers.repository';
-import { CostumerViewModel } from '../view-model/costumer-view-model';
+import { CustomersRepository } from '@/domain/repositories/customers.repository';
+import { CustomerViewModel } from '../view-model/customer-view-model';
 
 @Controller('profile')
 export class ProfileController {
-  constructor(private costumersRepository: CostumersRepository) {}
+  constructor(private customersRepository: CustomersRepository) {}
 
   @Get('/me')
-  async findCostumerNotifications(
-    @CurrentCostumer() costumer: AuthTokenPayload,
+  async findCustomerNotifications(
+    @CurrentCustomer() customer: AuthTokenPayload,
   ) {
-    const costumerId = costumer.sub;
+    const customerId = customer.sub;
     const profile =
-      await this.costumersRepository.findCostumerProfile(costumerId);
+      await this.customersRepository.findCustomerProfile(customerId);
 
     return {
-      data: CostumerViewModel.toHttp(profile),
+      data: CustomerViewModel.toHttp(profile),
     };
   }
 }

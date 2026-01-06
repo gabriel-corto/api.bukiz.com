@@ -18,7 +18,7 @@
   "eslint.format.enable": false,
 
   "terminal.integrated.defaultProfile.osx": "zsh",
-  "terminal.integrated.fontSize": 12,
+  "terminal.integrated.fontSize": 11,
   "terminal.integrated.fontFamily": "JetBrains Mono",
 
   "window.zoomLevel": 0,

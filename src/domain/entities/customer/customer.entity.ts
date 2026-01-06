@@ -1,22 +1,23 @@
 import { ulid } from 'ulidx';
 
 import { MakeOptional } from '@/helpers/make-optional';
-import { Otp } from './value-objects/costumer-otp.entity';
+import { Otp } from './value-objects/otp';
+import { Email } from './value-objects/email';
 
-export interface CostumerProps {
+export interface CustomerProps {
   id: string;
-  email: string;
+  email: Email;
   otp?: Otp | null;
   createdAt: Date;
   updatedAt: Date;
 }
 
-export class Costumer {
-  private props: CostumerProps;
+export class Customer {
+  private props: CustomerProps;
 
   constructor(
     props: MakeOptional<
-      CostumerProps,
+      CustomerProps,
       'id' | 'createdAt' | 'updatedAt' | 'otp'
     >,
   ) {
@@ -26,8 +27,6 @@ export class Costumer {
       createdAt: props.createdAt ?? new Date(),
       updatedAt: props.updatedAt ?? new Date(),
     };
-
-    this.validateEmail(this.props.email);
   }
 
   public get id(): string {
@@ -42,21 +41,12 @@ export class Costumer {
     return this.props.updatedAt;
   }
 
-  public get email(): string {
+  public get email(): Email {
     return this.props.email;
   }
 
   public get otp(): Otp | null | undefined {
     return this.props.otp;
-  }
-
-  private validateEmail(email: string) {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const isValidEmail = emailRegex.test(email);
-
-    if (!isValidEmail) {
-      throw new Error('Email Inválido');
-    }
   }
 
   public assignOtp(code: string) {

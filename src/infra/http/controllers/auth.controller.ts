@@ -1,30 +1,30 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 
-import { VerifyCostumerEmailUseCase } from '@/application/use-cases/auth/verify-costumer-email';
-import { VerifyCostumerAuthCodeUseCase } from '@/application/use-cases/auth/verify-costumer-otp';
+import { VerifyCustomerEmailUseCase } from '@/application/use-cases/auth/verify-customer-email';
+import { VerifyCustomerAuthCodeUseCase } from '@/application/use-cases/auth/verify-customer-otp';
 
-import { CostumerViewModel } from '../view-model/costumer-view-model';
+import { CustomerViewModel } from '../view-model/customer-view-model';
 import { Public } from '@/infra/shared/decorators/public.decorator';
 
-import { VerifyCostumerEmailBody } from '../dto/verify-costumer-email-body';
-import { VerifyOtpBody } from '../dto/verify-costumer-otp-body';
+import { VerifyCustomerEmailBody } from '../dto/verify-customer-email-body';
+import { VerifyOtpBody } from '../dto/verify-customer-otp-body';
 
 @Controller('auth')
 export class AuthController {
   constructor(
-    private verifyUser: VerifyCostumerEmailUseCase,
-    private verifyOtp: VerifyCostumerAuthCodeUseCase,
+    private verifyUser: VerifyCustomerEmailUseCase,
+    private verifyOtp: VerifyCustomerAuthCodeUseCase,
   ) {}
 
   @Public()
   @Post('/verify-email')
   @HttpCode(200)
-  async verifyEmail(@Body() body: VerifyCostumerEmailBody) {
-    const costumer = await this.verifyUser.execute(body);
+  async verifyEmail(@Body() body: VerifyCustomerEmailBody) {
+    const customer = await this.verifyUser.execute(body);
 
     return {
       statusCode: 200,
-      data: CostumerViewModel.toHttp(costumer),
+      data: CustomerViewModel.toHttp(customer),
     };
   }
 
@@ -33,7 +33,7 @@ export class AuthController {
   async verifyUserOtp(@Body() body: VerifyOtpBody) {
     const { code, email } = body;
 
-    const { costumer, accessToken } = await this.verifyOtp.execute({
+    const { customer, accessToken } = await this.verifyOtp.execute({
       code,
       email,
     });
@@ -42,7 +42,7 @@ export class AuthController {
       statusCode: 200,
       message: 'Authorized',
       data: {
-        costumer: CostumerViewModel.toHttp(costumer),
+        customer: CustomerViewModel.toHttp(customer),
         accessToken: accessToken,
       },
     };

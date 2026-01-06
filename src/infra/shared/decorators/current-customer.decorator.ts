@@ -1,16 +1,16 @@
 import { AuthTokenPayload } from '@/types/api';
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 
-export const CurrentCostumer = createParamDecorator(
+export const CurrentCustomer = createParamDecorator(
   (data: keyof AuthTokenPayload | undefined, context: ExecutionContext) => {
     const request = context.switchToHttp().getRequest();
 
-    const costumer = request.costumer;
+    const customer = request.customer;
 
     if (data) {
-      return costumer?.[data];
+      return customer?.[data];
     }
 
-    return costumer;
+    return customer;
   },
 );

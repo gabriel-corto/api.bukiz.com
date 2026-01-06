@@ -6,7 +6,7 @@ import { NotificationRepository } from '@/domain/repositories/notifications.repo
 import { ReadNotificationUseCase } from '@/application/use-cases/notifications/read-notification';
 import { SendNotificationUseCase } from '@/application/use-cases/notifications/send-notification';
 
-import { CurrentCostumer } from '@/infra/shared/decorators/current.costumer.decorator';
+import { CurrentCustomer } from '@/infra/shared/decorators/current-customer.decorator';
 
 import { SendNotificationBody } from '../dto/send-notification-body';
 import { ReadNotificationQuery } from '../dto/read-notification-query';
@@ -32,13 +32,13 @@ export class NotificationsController {
   }
 
   @Get('/me')
-  async findCostumerNotifications(
-    @CurrentCostumer() costumer: AuthTokenPayload,
+  async findCustomerNotifications(
+    @CurrentCustomer() customer: AuthTokenPayload,
   ) {
-    const costumerId = costumer.sub;
+    const customerId = customer.sub;
 
     const notifications =
-      await this.notificationRepository.findCostumerNotifications(costumerId);
+      await this.notificationRepository.findCustomerNotifications(customerId);
     return {
       data: notifications.map((notification) =>
         NotificationViewModel.toHtpp(notification),
