@@ -1,7 +1,7 @@
 import { Notification } from '@/domain/entities/notification/notification.entity';
 
 export class NotificationViewModel {
-  static toHtpp(notification: Notification) {
+  static toHttp(notification: Notification) {
     return {
       id: notification.id,
       content: notification.content,
@@ -10,5 +10,9 @@ export class NotificationViewModel {
       readAt: notification.readAt,
       hasRead: notification.hasRead,
     };
+  }
+
+  static toManyHttp(notifications: Notification[]) {
+    return notifications.map((notification) => this.toHttp(notification));
   }
 }

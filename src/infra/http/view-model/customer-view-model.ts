@@ -9,4 +9,8 @@ export class CustomerViewModel {
       updatedAt: customer.updatedAt,
     };
   }
+
+  static toManyHttp(customers: Customer[]) {
+    return customers.map((customer) => this.toHttp(customer));
+  }
 }

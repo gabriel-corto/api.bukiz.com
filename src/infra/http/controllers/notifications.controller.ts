@@ -2,15 +2,16 @@ import type { AuthTokenPayload } from '@/types/api';
 import { ApiResponse } from '@nestjs/swagger';
 import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 
-import { NotificationRepository } from '@/domain/repositories/notifications.repository';
 import { ReadNotificationUseCase } from '@/application/use-cases/notifications/read-notification';
 import { SendNotificationUseCase } from '@/application/use-cases/notifications/send-notification';
+import { FetchNotificationsUseCase } from '@/application/use-cases/notifications/fetch-notifications';
+import { FetchCustomerNotificationsUseCase } from '@/application/use-cases/notifications/fetch-customer-notifications';
 
 import { CurrentCustomer } from '@/infra/shared/decorators/current-customer.decorator';
+import { Public } from '@/infra/shared/decorators/public.decorator';
 
 import { SendNotificationBody } from '../dto/send-notification-body';
 import { ReadNotificationQuery } from '../dto/read-notification-query';
-import { Public } from '@/infra/shared/decorators/public.decorator';
 import { NotificationViewModel } from '../view-model/notification-view-model';
 
 @Controller('notifications')
@@ -18,16 +19,15 @@ export class NotificationsController {
   constructor(
     private sendNotification: SendNotificationUseCase,
     private readNotification: ReadNotificationUseCase,
-    private notificationRepository: NotificationRepository,
+    private fetchNotifications: FetchNotificationsUseCase,
+    private fetchCustomerNotifications: FetchCustomerNotificationsUseCase,
   ) {}
 
   @Get()
   async findAll() {
-    const notifications = await this.notificationRepository.findAll();
+    const notifications = await this.fetchNotifications.execute();
     return {
-      data: notifications.map((notification) =>
-        NotificationViewModel.toHtpp(notification),
-      ),
+      data: NotificationViewModel.toManyHttp(notifications),
     };
   }
 
@@ -37,12 +37,12 @@ export class NotificationsController {
   ) {
     const customerId = customer.sub;
 
-    const notifications =
-      await this.notificationRepository.findCustomerNotifications(customerId);
+    const notifications = await this.fetchCustomerNotifications.execute({
+      recipientId: customerId,
+    });
+
     return {
-      data: notifications.map((notification) =>
-        NotificationViewModel.toHtpp(notification),
-      ),
+      data: NotificationViewModel.toManyHttp(notifications),
     };
   }
 
@@ -57,7 +57,7 @@ export class NotificationsController {
     });
 
     return {
-      notification: NotificationViewModel.toHtpp(notification),
+      notification: NotificationViewModel.toHttp(notification),
     };
   }
 
@@ -72,7 +72,7 @@ export class NotificationsController {
     });
 
     return {
-      notification: NotificationViewModel.toHtpp(notification),
+      notification: NotificationViewModel.toHttp(notification),
     };
   }
 }

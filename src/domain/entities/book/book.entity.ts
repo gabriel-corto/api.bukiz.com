@@ -57,8 +57,8 @@ export class Book {
   get author(): string {
     return this.props.author;
   }
-  get price(): number {
-    return this.props.price.amount;
+  get price(): Price {
+    return this.props.price;
   }
   get stock(): number {
     return this.props.stock;

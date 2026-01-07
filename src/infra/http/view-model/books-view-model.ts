@@ -13,4 +13,8 @@ export class BooksViewModel {
       createdAt: book.createdAt,
     };
   }
+
+  static toManyHttp(books: Book[]) {
+    return books.map((book) => this.toHttp(book));
+  }
 }

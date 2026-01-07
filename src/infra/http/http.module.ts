@@ -7,41 +7,29 @@ import { DatabaseModule } from '../database/database.module';
 import { MailModule } from '../mail/mail.module';
 import { AuthGuard } from '../shared/guard/auth.guard';
 
-import { VerifyCustomerAuthCodeUseCase } from '@/application/use-cases/auth/verify-customer-otp';
-import { VerifyCustomerEmailUseCase } from '@/application/use-cases/auth/verify-customer-email';
-import { SendNotificationUseCase } from '@/application/use-cases/notifications/send-notification';
-import { ReadNotificationUseCase } from '@/application/use-cases/notifications/read-notification';
-
 import { AppController } from './controllers/app.controller';
-import { AuthController } from './controllers/auth.controller';
-import { ProfileController } from './controllers/profile.controller';
-import { NotificationsController } from './controllers/notifications.controller';
-import { BooksController } from './controllers/books.controller';
-import { RegisterBookUseCase } from '@/application/use-cases/books/register-book';
+
+import { AuthModule } from './modules/auth.module';
+import { BooksModule } from './modules/books.module';
+import { NotificationsModule } from './modules/notifications.module';
+import { CustomerModule } from './modules/customer.module';
 
 @Module({
   imports: [
     DatabaseModule,
     MailModule,
+    AuthModule,
+    BooksModule,
+    NotificationsModule,
+    CustomerModule,
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET_KEY,
       signOptions: { expiresIn: '1d' },
     }),
   ],
-  controllers: [
-    AuthController,
-    AppController,
-    NotificationsController,
-    ProfileController,
-    BooksController,
-  ],
+  controllers: [AppController],
   providers: [
-    VerifyCustomerEmailUseCase,
-    SendNotificationUseCase,
-    ReadNotificationUseCase,
-    VerifyCustomerAuthCodeUseCase,
-    RegisterBookUseCase,
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
