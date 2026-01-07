@@ -9,7 +9,7 @@ export class PrismaBooksMapper {
       title: book.title,
       author: book.author,
       cover: book.cover,
-      price: book.price,
+      price: book.price.amount,
       category: book.category,
       stock: book.stock,
       createdAt: book.createdAt,
