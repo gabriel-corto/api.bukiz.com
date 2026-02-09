@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { ReadNotificationDto } from '@/application/dto/read-notification.dto';
 import { NotificationRepository } from '@/domain/repositories/notifications.repository';
 
@@ -14,7 +14,7 @@ export class ReadNotificationUseCase {
     });
 
     if (!notification) {
-      throw new BadRequestException('Notificação não encontrada!');
+      throw new NotFoundException('Notificação não encontrada!');
     }
 
     notification.read();

@@ -3,13 +3,7 @@ import { Price } from './value-objects/price';
 
 import { constants } from '@/infra/constant/constant';
 import { MakeOptional } from '@/helpers/make-optional';
-
-export type BookCategory =
-  | 'Finance'
-  | 'Technology'
-  | 'Business'
-  | 'Education'
-  | 'Health';
+import { BookCategory } from '@/types/enums';
 
 export interface BookProps {
   id: string;

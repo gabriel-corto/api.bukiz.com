@@ -10,6 +10,11 @@ import { PrismaCustomerMapper } from '../mappers/prisma-customers.mapper';
 export class PrismaCustomersRepository implements CustomersRepository {
   constructor(private prisma: PrismaService) {}
 
+  async findAll(): Promise<Customer[]> {
+    const customers = await this.prisma.customer.findMany();
+    return customers.map((costumer) => PrismaCustomerMapper.toDomain(costumer));
+  }
+
   async findByEmail(email: string) {
     const user = await this.prisma.customer.findUnique({
       where: {
@@ -28,16 +33,14 @@ export class PrismaCustomersRepository implements CustomersRepository {
     return user ? PrismaCustomerMapper.toDomain(user) : null;
   }
 
-  async findCustomerProfile(id: string): Promise<Customer> {
+  async findCustomerProfile(id: string): Promise<Customer | null> {
     const customer = await this.prisma.customer.findUnique({
       where: {
         id,
       },
     });
 
-    return customer
-      ? PrismaCustomerMapper.toDomain(customer)
-      : ({} as Customer);
+    return customer ? PrismaCustomerMapper.toDomain(customer) : null;
   }
 
   async save(user: Customer): Promise<Customer> {

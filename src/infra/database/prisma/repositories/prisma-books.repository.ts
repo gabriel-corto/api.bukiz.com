@@ -3,13 +3,19 @@ import { BooksRepository } from '@/domain/repositories/books.repository';
 import { PrismaService } from '../prisma.service';
 import { PrismaBooksMapper } from '../mappers/prisma-books-mapper';
 import { Injectable } from '@nestjs/common';
+import { QueryParamsDto } from '@/application/dto/query-params.dto';
 
 @Injectable()
 export class PrismaBooksRepository implements BooksRepository {
   constructor(private prisma: PrismaService) {}
 
-  async findAll(): Promise<Book[]> {
-    const books = await this.prisma.book.findMany();
+  async findAll(params: QueryParamsDto): Promise<Book[]> {
+    const { size } = params;
+
+    const books = await this.prisma.book.findMany({
+      take: Number(size) || 10,
+    });
+
     return books.map((book) => PrismaBooksMapper.toDomain(book));
   }
 

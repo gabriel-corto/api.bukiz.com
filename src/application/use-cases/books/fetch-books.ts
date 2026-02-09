@@ -1,12 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { BooksRepository } from '@/domain/repositories/books.repository';
-import { Book } from '@/domain/entities/book/book.entity';
+import { QueryParamsDto } from '@/application/dto/query-params.dto';
 
 @Injectable()
 export class FetchBooksUseCase {
   constructor(private booksRepository: BooksRepository) {}
 
-  async execute(): Promise<Book[]> {
-    return await this.booksRepository.findAll();
+  async execute(params?: QueryParamsDto) {
+    const books = await this.booksRepository.findAll({
+      size: params?.size,
+    });
+
+    return {
+      books,
+      metadata: {
+        size: books.length,
+        total: books.length,
+      },
+    };
   }
 }

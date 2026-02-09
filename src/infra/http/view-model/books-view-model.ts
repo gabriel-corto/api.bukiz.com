@@ -7,7 +7,7 @@ export class BooksViewModel {
       title: book.title,
       author: book.author,
       cover: book.cover,
-      price: book.price,
+      price: book.price.amount,
       stock: book.stock,
       category: book.category,
       createdAt: book.createdAt,

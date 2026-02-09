@@ -16,10 +16,15 @@ export class InMemoryCustomersRepository implements CustomersRepository {
     return customer || null;
   }
 
-  async findCustomerProfile(id: string): Promise<Customer> {
+  async findCustomerProfile(id: string): Promise<Customer | null> {
     await Promise.resolve();
     const customer = this.items.find((item) => item.id === id);
-    return customer as Customer;
+    return customer || null;
+  }
+
+  async findAll(): Promise<Customer[]> {
+    await Promise.resolve();
+    return this.items;
   }
 
   async create(customer: Customer): Promise<Customer> {

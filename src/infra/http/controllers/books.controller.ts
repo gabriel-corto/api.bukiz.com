@@ -1,13 +1,24 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { CreateBookBody } from '../dto/create-book-body';
-import { RegisterBookUseCase } from '@/application/use-cases/books/register-book';
 import { BooksViewModel } from '../view-model/books-view-model';
-import { Public } from '@/infra/shared/decorators/public.decorator';
-import { FindByIdDto } from '@/infra/shared/dto/find-by-id.dto';
+
 import { FetchBooksUseCase } from '@/application/use-cases/books/fetch-books';
 import { GetBookByIdUseCase } from '@/application/use-cases/books/get-book-by-id';
+import { RegisterBookUseCase } from '@/application/use-cases/books/register-book';
 import { DeleteBookUseCase } from '@/application/use-cases/books/delete-book';
+
 import { DeleteItemDto } from '@/infra/shared/dto/delete-item.dto';
+import { FindByIdDto } from '@/infra/shared/dto/find-by-id.dto';
+import { Public } from '@/infra/shared/decorators/public.decorator';
+import { QueryParamsDto } from '@/application/dto/query-params.dto';
 
 @Controller('/books')
 export class BooksController {
@@ -20,11 +31,12 @@ export class BooksController {
 
   @Public()
   @Get()
-  async findAll() {
-    const books = await this.fetchBooks.execute();
+  async findAll(@Query() params: QueryParamsDto) {
+    const { books, metadata } = await this.fetchBooks.execute(params);
 
     return {
       data: BooksViewModel.toManyHttp(books),
+      metadata,
     };
   }
 

@@ -1,4 +1,4 @@
-import { BookCategory } from '@/domain/entities/book/book.entity';
+import { BookCategory } from '@/types/enums';
 
 export class CreateBookDto {
   author: string;
